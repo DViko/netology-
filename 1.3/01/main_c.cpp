@@ -1,6 +1,7 @@
 #include <iostream>
 
 int main() {
+    
     bool values[] = {true, false};
     
     std::cout << "operator: ||" << std::endl;

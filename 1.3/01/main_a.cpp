@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 int main() {
+    
     bool a, b, result;
     
     std::cout << "operator: ||" << std::endl;

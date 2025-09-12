@@ -4,6 +4,7 @@ void get_bool_values(short i, bool &a, bool &b);
 void print_bool_values(bool a, bool b, bool result);
 
 int main() {
+
     std::cout << "operator: ||" << std::endl;
 
     bool a, b;
@@ -29,6 +30,7 @@ int main() {
 }
 
 void get_bool_values(short i, bool &a, bool &b) {
+    
     switch (i) {
         case 0: a = true;  b = true;
             break;

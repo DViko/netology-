@@ -4,6 +4,7 @@
 #include <cctype>
 
 int main() {
+    
     std::string gender, zodiac, prediction;
     int age;
     

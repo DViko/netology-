@@ -1,6 +1,7 @@
 #include <iostream>
 
 int main() {
+    
     int a, b, c;
 
     std::cout << "Enter value 1: ";
