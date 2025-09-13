@@ -1,50 +1,67 @@
 #include <iostream>
 #include <string>
+#include <array>
+#include <string_view>
 
-std::string numberToText(int n);
+struct NumberWords{
+    std::array<std::string_view, 10> units{"", "one", "two", "three", "four", "five", 
+                                            "six", "seven", "eight", "nine"};
+    std::array<std::string_view, 10> teens{"ten", "eleven", "twelve", "thirteen", 
+                                            "fourteen", "fifteen", "sixteen", 
+                                            "seventeen", "eighteen", "nineteen"};
+    std::array<std::string_view, 10> tens{"", "", "twenty", "thirty", "forty", "fifty", 
+                                            "sixty", "seventy", "eighty", "ninety"};
+};
+
+std::string numberToText(int number, const NumberWords& words);
+void compareNumbers(int first_number, int second_number, const NumberWords& words);
 
 int main() {
-    
-    int a, b;
 
-    std::cout << "Enter an integer between -100 and 100: "; std::cin >> a;
-    std::cout << "Enter an integer between -100 and 100: "; std::cin >> b;
+    NumberWords words;
+    int first_number{0}, second_number{0};
 
-    std::string comp = (a < b) ? " less than " : (a > b) ? " greater than " : " equal to ";
-    std::cout << numberToText(a) << comp << numberToText(b) << std::endl;
+    std::cout << "Enter an integer between -100 and 100: ";
+    std::cin >> first_number;
+
+    std::cout << "Enter an integer between -100 and 100: ";
+    std::cin >> second_number;
+
+    compareNumbers(first_number, second_number, words);
 
     return EXIT_SUCCESS;
 }
 
-std::string numberToText(int n) {
+void compareNumbers(int first_number, int second_number, const NumberWords& words) {
 
-    if (n < -100 || n > 100)
+    std::string comp = (first_number < second_number) ? " less than "
+    : (first_number > second_number) ? " greater than "
+    : " equal to ";
+
+    std::cout << numberToText(first_number, words) << comp << numberToText(second_number, words) << std::endl;
+}
+
+std::string numberToText(int number, const NumberWords& words) {
+
+    // ToDo: Clean up this function
+
+    if (number < -100 || number > 100)
         return "number out of range";
-    if (n == -100)
+    if (number == -100)
         return "minus one hundred";
-    if (n < 0)
-        return "minus " + numberToText(-n);
-    if (n == 0)
+    if (number < 0)
+        return "minus " + numberToText(-number, words);
+    if (number == 0)
         return "zero";
 
-    std::string units[] = {"", "one", "two", "three", "four", "five", 
-                            "six", "seven", "eight", "nine"};
-
-    std::string teens[] = {"ten", "eleven", "twelve", "thirteen", 
-                            "fourteen", "fifteen", "sixteen", 
-                            "seventeen", "eighteen", "nineteen"};
-
-    std::string tens[] =  {"", "", "twenty", "thirty", "forty", "fifty", 
-                            "sixty", "seventy", "eighty", "ninety"};
-
-    if (n == 100)
+    if (number == 100)
         return "one hundred";
-    if (n < 10)
-        return units[n];
-    if (n < 20)
-        return teens[n - 10];
-    if (n < 100)
-        return tens[n / 10] + (n % 10 ? " " + units[n % 10] : "");
+    if (number < 10)
+        return std::string(words.units[number]);
+    if (number < 20)
+        return std::string(words.teens[number - 10]);
+    if (number < 100)
+        return std::string(words.tens[number / 10]) + (number % 10 ? " " + std::string(words.units[number % 10]) : "");
 
     return "";
 }

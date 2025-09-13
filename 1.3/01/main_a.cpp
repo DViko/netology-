@@ -3,7 +3,7 @@
 
 int main() {
     
-    bool a, b, result;
+    bool a{false}, b{false}, result{false};
     
     std::cout << "operator: ||" << std::endl;
     

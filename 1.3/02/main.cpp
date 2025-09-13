@@ -2,7 +2,7 @@
 
 int main() {
     
-    int a, b, c;
+    int a{0}, b{0}, c{0};
 
     std::cout << "Enter value 1: ";
     std::cin >> a;

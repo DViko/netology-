@@ -2,12 +2,13 @@
 #include <string>
 
 int main() {
-    std::string input_str;
+    
+    std::string input_string{"def"};
 
     std::cout << "What is your name ? : ";
-    std::cin >> input_str;
+    std::cin >> input_string;
 
-    std::cout << "Hello : " << input_str << " !" << std::endl;
+    std::cout << "Hello : " << input_string << " !" << std::endl;
 
     return EXIT_SUCCESS;
 }
