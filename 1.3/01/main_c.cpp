@@ -2,7 +2,7 @@
 
 int main() {
     
-    bool values[] = {true, false};
+    bool values[2] = {true, false};
     
     std::cout << "operator: ||" << std::endl;
     std::cout << std::boolalpha;

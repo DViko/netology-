@@ -43,5 +43,6 @@ void getBoolValues(short i, bool &a, bool &b) {
 }
 
 void printBoolValues(bool a, bool b, bool result) {
+    
     std::cout << a << "\t" << b << "\t" << result << std::endl;
 }

@@ -34,7 +34,9 @@ int main() {
     std::cin >> age;
 
     if (age < age_limit[0] || age > age_limit[1]) {
+        
         std::cout << notifications[1] << std::endl;
+
         return EXIT_FAILURE;
     }
 
@@ -54,8 +56,7 @@ int main() {
         } else {
             prediction = notifications[0];
         }
-    }
-    else {
+    } else {
         prediction = notifications[0];
     }
 
