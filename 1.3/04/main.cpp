@@ -1,15 +1,17 @@
 #include <iostream>
 #include <string>
 #include <array>
-#include <string_view>
+
 
 struct NumberWords{
-    std::array<std::string_view, 10> units{"", "one", "two", "three", "four", "five", 
+    std::array<std::string, 10> units{"", "one", "two", "three", "four", "five", 
                                             "six", "seven", "eight", "nine"};
-    std::array<std::string_view, 10> teens{"ten", "eleven", "twelve", "thirteen", 
+                                            
+    std::array<std::string, 10> teens{"ten", "eleven", "twelve", "thirteen", 
                                             "fourteen", "fifteen", "sixteen", 
                                             "seventeen", "eighteen", "nineteen"};
-    std::array<std::string_view, 10> tens{"", "", "twenty", "thirty", "forty", "fifty", 
+
+    std::array<std::string, 10> tens{"", "", "twenty", "thirty", "forty", "fifty", 
                                             "sixty", "seventy", "eighty", "ninety"};
 };
 
@@ -34,9 +36,12 @@ int main() {
 
 void compareNumbers(int first_number, int second_number, const NumberWords& words) {
 
-    std::string comp = (first_number < second_number) ? " less than "
-    : (first_number > second_number) ? " greater than "
-    : " equal to ";
+    std::string comp 
+    {
+        (first_number < second_number) ? " less than "
+        : (first_number > second_number) ? " greater than "
+        : " equal to "
+    };
 
     std::cout << numberToText(first_number, words) << comp << numberToText(second_number, words) << std::endl;
 }
