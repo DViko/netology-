@@ -6,7 +6,7 @@
 struct NumberWords{
     std::array<std::string, 10> units{"", "one", "two", "three", "four", "five", 
                                             "six", "seven", "eight", "nine"};
-                                            
+
     std::array<std::string, 10> teens{"ten", "eleven", "twelve", "thirteen", 
                                             "fourteen", "fifteen", "sixteen", 
                                             "seventeen", "eighteen", "nineteen"};
@@ -16,7 +16,7 @@ struct NumberWords{
 };
 
 std::string numberToText(int number, const NumberWords& words);
-void compareNumbers(int first_number, int second_number, const NumberWords& words);
+void        compareNumbers(int first_number, int second_number, const NumberWords& words);
 
 int main() {
 
@@ -50,23 +50,40 @@ std::string numberToText(int number, const NumberWords& words) {
 
     // ToDo: Clean up this function
 
-    if (number < -100 || number > 100)
-        return "number out of range";
-    if (number == -100)
-        return "minus one hundred";
-    if (number < 0)
-        return "minus " + numberToText(-number, words);
-    if (number == 0)
-        return "zero";
-
-    if (number == 100)
-        return "one hundred";
-    if (number < 10)
-        return std::string(words.units[number]);
-    if (number < 20)
-        return std::string(words.teens[number - 10]);
     if (number < 100)
         return std::string(words.tens[number / 10]) + (number % 10 ? " " + std::string(words.units[number % 10]) : "");
+
+    else if (number < 20)
+        return std::string(words.teens[number - 10]);
+
+    else if (number < 10)
+        return std::string(words.units[number]);
+
+    else if (number < 0)
+        return "minus " + numberToText(-number, words);
+
+    else if (number == 0)
+        return "zero";
+
+    else if (number == -100)
+        return "minus one hundred";
+
+    else if (number == 100)
+        return "one hundred";
+
+    else 
+        return "number out of range";
+
+    //if (number < -100 || number > 100)
+        //return "number out of range";
+    
+    
+    
+
+    
+    
+    
+    
 
     return "";
 }
