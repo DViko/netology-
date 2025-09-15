@@ -8,6 +8,7 @@ int main() {
     bool a{false}, b{false};
 
     std::cout << "operator: ||" << std::endl;
+    std::cout << std::boolalpha;
 
     for (short i = 0; i < 4; i++) {
 
@@ -42,5 +43,5 @@ void getBoolValues(short i, bool &a, bool &b) {
 }
 
 void printBoolValues(bool a, bool b, bool result) {
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
 }

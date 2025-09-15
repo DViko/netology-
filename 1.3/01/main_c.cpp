@@ -5,10 +5,11 @@ int main() {
     bool values[] = {true, false};
     
     std::cout << "operator: ||" << std::endl;
+    std::cout << std::boolalpha;
 
     for (bool a: values) {
         for (bool b : values) {
-            std::cout << std::boolalpha << b << "\t" << a << "\t" << (b || a) << std::endl;
+            std::cout << b << "\t" << a << "\t" << (b || a) << std::endl;
         }
     }
 
@@ -17,7 +18,7 @@ int main() {
 
     for (bool a : values) {
         for (bool b : values) {
-            std::cout << std::boolalpha << b << "\t" << a << "\t" << (b && a) << std::endl;
+            std::cout << b << "\t" << a << "\t" << (b && a) << std::endl;
         }
     }
 

@@ -6,6 +6,7 @@ int main() {
     bool a{false}, b{false}, result{false};
     
     std::cout << "operator: ||" << std::endl;
+    std::cout << std::boolalpha;
     
     a = true; b = true;
 
@@ -14,7 +15,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
 
     a = false; b = true;
 
@@ -23,7 +24,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     a = true; b = false;
 
@@ -32,7 +33,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
      
     a = false; b = false;
 
@@ -41,7 +42,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
     std::cout << std::endl;
 
     std::cout << "operator: &&" << std::endl;
@@ -53,7 +54,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
 
     a = false; b = true;
 
@@ -62,7 +63,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     a = true; b = false;
 
@@ -71,7 +72,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     a = false; b = false;
 
@@ -80,7 +81,7 @@ int main() {
     else
         result = false;
 
-    std::cout << std::boolalpha << a << "\t" << b << "\t" << result << std::endl;
+    std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     return EXIT_SUCCESS;
 }
