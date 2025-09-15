@@ -71,19 +71,9 @@ std::string numberToText(int number, const NumberWords& words) {
     else if (number == 100)
         return "one hundred";
 
-    else 
+    else if (number < -100 || number > 100)
         return "number out of range";
 
-    //if (number < -100 || number > 100)
-        //return "number out of range";
-    
-    
-    
-
-    
-    
-    
-    
-
-    return "";
+    else 
+        return "";
 }
