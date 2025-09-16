@@ -43,7 +43,7 @@ int main() {
     std::transform(gender.begin(), gender.end(), gender.begin(), [](unsigned char c){ return std::tolower(c); });
     std::transform(zodiac.begin(), zodiac.end(), zodiac.begin(), [](unsigned char c){ return std::tolower(c); });
 
-    //Of course I can use some cycles but theme of lesson is a conditional operators
+    //Of course I can use some cycles but theme of the lesson is a conditional operators
 
     if (gender == "m")
         if (zodiac == zodiac_signs[3] || zodiac == zodiac_signs[6] || zodiac == zodiac_signs[11])
