@@ -8,7 +8,7 @@ bool isEarthZodiacSign(std::string zodiac, std::string zodiac_signs[]);
 
 int main() {
     
-    std::string gender{"def"}, zodiac{"def"}, prediction{"def"};
+    std::string gender{""}, zodiac{""}, prediction{""};
     int age{0}, male_max_age{40}, female_min_age{15}, female_max_age{30};
     int age_limit[2] = {0, 120};
 
