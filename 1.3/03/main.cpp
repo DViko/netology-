@@ -43,22 +43,28 @@ int main() {
     std::transform(gender.begin(), gender.end(), gender.begin(), [](unsigned char c){ return std::tolower(c); });
     std::transform(zodiac.begin(), zodiac.end(), zodiac.begin(), [](unsigned char c){ return std::tolower(c); });
 
-    if (gender == "m") {
-        if ((zodiac == zodiac_signs[3] || zodiac == zodiac_signs[6] || zodiac == zodiac_signs[11]) && age < male_max_age) {
-            prediction = predictions[0];
-        } else {
+    if (gender == "m")
+        if (zodiac == zodiac_signs[3] || zodiac == zodiac_signs[6] || zodiac == zodiac_signs[11])
+            if (age < male_max_age)
+                prediction = predictions[1];
+            else 
+                prediction = notifications[0];
+        else
             prediction = notifications[0];
-        }
-    }
-    else if (gender == "f") {
-        if ((zodiac == zodiac_signs[1] || zodiac == zodiac_signs[5] || zodiac == zodiac_signs[10]) && age >= female_min_age && age <= female_max_age) {
-            prediction = predictions[1];
-        } else {
+
+    else if (gender == "f")
+        if (zodiac == zodiac_signs[1] || zodiac == zodiac_signs[5] || zodiac == zodiac_signs[10])
+            if (age >= female_min_age && age <= female_max_age)
+                prediction = predictions[0];
+            else
+                prediction = notifications[0];
+
+        else
             prediction = notifications[0];
-        }
-    } else {
+
+    else
         prediction = notifications[0];
-    }
+
 
     std::cout << prediction << std::endl;
 
