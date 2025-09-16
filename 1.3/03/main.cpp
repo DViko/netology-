@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <cctype>
 
+bool isWaterZodiacSign(std::string zodiac, std::string zodiac_signs[]);
+bool isEarthZodiacSign(std::string zodiac, std::string zodiac_signs[]);
+
 int main() {
     
     std::string gender{"def"}, zodiac{"def"}, prediction{"def"};
@@ -43,29 +46,23 @@ int main() {
     std::transform(gender.begin(), gender.end(), gender.begin(), [](unsigned char c){ return std::tolower(c); });
     std::transform(zodiac.begin(), zodiac.end(), zodiac.begin(), [](unsigned char c){ return std::tolower(c); });
 
-    //Of course I can use some cycles but theme of the lesson is conditional operators
-
-    if (gender == "m")
-        if (zodiac == zodiac_signs[3] || zodiac == zodiac_signs[6] || zodiac == zodiac_signs[11])
-            if (age < male_max_age)
-                prediction = predictions[1];
-            else 
-                prediction = notifications[0];
-        else
-            prediction = notifications[0];
-
-    else if (gender == "f")
-        if (zodiac == zodiac_signs[1] || zodiac == zodiac_signs[5] || zodiac == zodiac_signs[10])
-            if (age >= female_min_age && age <= female_max_age)
-                prediction = predictions[0];
-            else
-                prediction = notifications[0];
-        else
-            prediction = notifications[0];
+    if (gender == "m" && isWaterZodiacSign(zodiac, zodiac_signs) && age < male_max_age)
+        prediction = predictions[1];
+    else if (gender == "f" && isEarthZodiacSign(zodiac, zodiac_signs) && age >= female_min_age && age <= female_max_age)
+        prediction = predictions[0];
     else
         prediction = notifications[0];
 
     std::cout << prediction << std::endl;
 
     return EXIT_SUCCESS;
+}
+
+
+bool isWaterZodiacSign(std::string zodiac, std::string zodiac_signs[]) {
+    return zodiac == zodiac_signs[3] || zodiac == zodiac_signs[6] || zodiac == zodiac_signs[11];
+}
+
+bool isEarthZodiacSign(std::string zodiac, std::string zodiac_signs[]) {
+    return zodiac == zodiac_signs[1] || zodiac == zodiac_signs[5] || zodiac == zodiac_signs[10];
 }

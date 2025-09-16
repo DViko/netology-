@@ -10,37 +10,29 @@ int main() {
     
     a = true; b = true;
 
-    if (a || b)
-        result = true;
-    else
-        result = false;
+    if (a || b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
 
     a = false; b = true;
 
-    if (a || b)
-        result = true;
-    else
-        result = false;
+    if (a || b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     a = true; b = false;
 
-    if (a || b)
-        result = true;
-    else
-        result = false;
+    if (a || b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
      
     a = false; b = false;
 
-    if (a || b)
-        result = true;
-    else
-        result = false;
+    if (a || b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
     std::cout << std::endl;
@@ -49,37 +41,29 @@ int main() {
     
     a = true; b = true;
 
-    if (a && b)
-        result = true;
-    else
-        result = false;
+    if (a && b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
 
     a = false; b = true;
 
-    if (a && b)
-        result = true;
-    else
-        result = false;
+    if (a && b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     a = true; b = false;
 
-    if (a && b)
-        result = true;
-    else
-        result = false;
+    if (a && b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
     
     a = false; b = false;
 
-    if (a && b)
-        result = true;
-    else
-        result = false;
+    if (a && b) result = true;
+    else result = false;
 
     std::cout << a << "\t" << b << "\t" << result << std::endl;
     
