@@ -58,13 +58,10 @@ int main() {
                 prediction = predictions[0];
             else
                 prediction = notifications[0];
-
         else
             prediction = notifications[0];
-
     else
         prediction = notifications[0];
-
 
     std::cout << prediction << std::endl;
 
