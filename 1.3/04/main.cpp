@@ -86,9 +86,9 @@ std::string getConstructedString(int first_integer, int second_integer, const In
 
     std::string comp{
 
-        (first_integer < second_integer)   ? " less than "
-        : (first_integer > second_integer) ? " greater than "
-                                         : " equal to "
+        (first_integer < second_integer)    ? " less than "
+        : (first_integer > second_integer)  ? " greater than "
+                                            : " equal to "
     };
 
     return std::format("{}{}{}", convertIntegerToText(first_integer, words), comp, convertIntegerToText(second_integer, words));
