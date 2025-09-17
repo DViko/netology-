@@ -24,7 +24,7 @@ struct IntegersInWords {
     std::string zero{"zero"};
 };
 
-void getConstructedString(int first_integer, int second_integer, const IntegersInWords& words);
+std::string getConstructedString(int first_integer, int second_integer, const IntegersInWords& words);
 
 int main() {
 
@@ -44,7 +44,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    getConstructedString(first_integer, second_integer, words);
+    std::cout << getConstructedString(first_integer, second_integer, words) << std::endl;
 
     return EXIT_SUCCESS;
 }
@@ -70,7 +70,7 @@ std::string convertIntegerToText(int integer, const IntegersInWords& words) {
                            : std::format("{} {}", words.tens[tens_part], words.units[units_part]);
 }
 
-void getConstructedString(int first_integer, int second_integer, const IntegersInWords& words) {
+std::string getConstructedString(int first_integer, int second_integer, const IntegersInWords& words) {
 
     std::string comp{
 
@@ -79,9 +79,5 @@ void getConstructedString(int first_integer, int second_integer, const IntegersI
                                          : " equal to "
     };
 
-    std::cout << std::format("{}{}{}", 
-                convertIntegerToText(first_integer, words), 
-                comp, 
-                convertIntegerToText(second_integer, words))
-              << std::endl;
+    return std::format("{}{}{}", convertIntegerToText(first_integer, words), comp, convertIntegerToText(second_integer, words));
 }
