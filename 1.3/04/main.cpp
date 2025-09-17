@@ -32,10 +32,22 @@ int main() {
     int first_integer{0}, second_integer{0};
 
     std::cout << "Enter an integer between -100 and 100: ";
-    std::cin >> first_integer;
+
+    if (!(std::cin >> first_integer)) {
+
+        std::cout << "Error: Invalid input." << std::endl;
+
+        return EXIT_FAILURE;
+    }
 
     std::cout << "Enter an integer between -100 and 100: ";
-    std::cin >> second_integer;
+    
+    if (!(std::cin >> second_integer)) {
+
+        std::cout << "Error: Invalid input." << std::endl;
+
+        return EXIT_FAILURE;
+    }
 
     if (first_integer < -100 || first_integer > 100 || second_integer < -100 || second_integer > 100) {
 
