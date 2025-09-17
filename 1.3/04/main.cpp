@@ -1,78 +1,87 @@
 #include <iostream>
 #include <string>
 #include <array>
+#include <format>
 
 
-struct NumberWords{
-    std::array<std::string, 10> units{"", "one", "two", "three", "four", "five", 
-                                            "six", "seven", "eight", "nine"};
+struct IntegersInWords {
 
-    std::array<std::string, 10> teens{"ten", "eleven", "twelve", "thirteen", 
+    std::array<std::string, 10> units   {"", "one", "two", "three", "four", "five", 
+                                            "six", "seven", "eight", "nine"
+                                        };
+
+    std::array<std::string, 10> teens   {"ten", "eleven", "twelve", "thirteen", 
                                             "fourteen", "fifteen", "sixteen", 
-                                            "seventeen", "eighteen", "nineteen"};
+                                            "seventeen", "eighteen", "nineteen"
+                                        };
 
-    std::array<std::string, 10> tens{"", "", "twenty", "thirty", "forty", "fifty", 
-                                            "sixty", "seventy", "eighty", "ninety"};
+    std::array<std::string, 10> tens    {"", "", "twenty", "thirty", "forty", "fifty", 
+                                            "sixty", "seventy", "eighty", "ninety"
+                                        };
+
+    std::string minus{"minus"};
+    std::string hundred{"hundred"};
+    std::string zero{"zero"};
 };
 
-std::string numberToText(int number, const NumberWords& words);
-void        compareNumbers(int first_number, int second_number, const NumberWords& words);
+void getConstructedString(int first_integer, int second_integer, const IntegersInWords& words);
 
 int main() {
 
-    NumberWords words;
-    int first_number{0}, second_number{0};
+    IntegersInWords words;
+    int first_integer{0}, second_integer{0};
 
     std::cout << "Enter an integer between -100 and 100: ";
-    std::cin >> first_number;
+    std::cin >> first_integer;
 
     std::cout << "Enter an integer between -100 and 100: ";
-    std::cin >> second_number;
+    std::cin >> second_integer;
 
-    compareNumbers(first_number, second_number, words);
+    if (first_integer < -100 || first_integer > 100 || second_integer < -100 || second_integer > 100) {
+
+        std::cout << "Error: Numbers must be between -100 and 100." << std::endl;
+
+        return EXIT_FAILURE;
+    }
+
+    getConstructedString(first_integer, second_integer, words);
 
     return EXIT_SUCCESS;
 }
 
-void compareNumbers(int first_number, int second_number, const NumberWords& words) {
+std::string convertIntegerToText(int integer, const IntegersInWords& words) {
 
-    std::string comp 
-    {
-        (first_number < second_number) ? " less than "
-        : (first_number > second_number) ? " greater than "
-        : " equal to "
-    };
+    if (integer < 0)
+        return std::format("{} {}", words.minus, convertIntegerToText(-integer, words));
 
-    std::cout << numberToText(first_number, words) << comp << numberToText(second_number, words) << std::endl;
+    if (integer == 0)
+        return words.zero;
+
+    if (integer == 100)
+        return std::format("{} {}", words.units[1], words.hundred);
+
+    if (integer < 20)
+        return integer < 10 ? words.units[integer] : words.teens[integer - 10];
+
+    int tens_part = integer / 10;
+    int units_part = integer % 10;
+
+    return units_part == 0 ? words.tens[tens_part] 
+                           : std::format("{} {}", words.tens[tens_part], words.units[units_part]);
 }
 
-std::string numberToText(int number, const NumberWords& words) {
+void getConstructedString(int first_integer, int second_integer, const IntegersInWords& words) {
 
-    // ToDo: Clean up this function
+    std::string comp{
 
-    if (number < 100)
-        return std::string(words.tens[number / 10]) + (number % 10 ? " " + std::string(words.units[number % 10]) : "");
+        (first_integer < second_integer)   ? " less than "
+        : (first_integer > second_integer) ? " greater than "
+                                         : " equal to "
+    };
 
-    else if (number < 20)
-        return std::string(words.teens[number - 10]);
-
-    else if (number < 10)
-        return std::string(words.units[number]);
-
-    else if (number < 0)
-        return "minus " + numberToText(-number, words);
-
-    else if (number == 0)
-        return "zero";
-
-    else if (number == -100)
-        return "minus one hundred";
-
-    else if (number == 100)
-        return "one hundred";
-
-    else if (number < -100 || number > 100)
-        return "number out of range";
-    else 
-        return "";
+    std::cout << std::format("{}{}{}", 
+                convertIntegerToText(first_integer, words), 
+                comp, 
+                convertIntegerToText(second_integer, words))
+              << std::endl;
 }
