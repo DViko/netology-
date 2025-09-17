@@ -41,7 +41,7 @@ int main() {
     }
 
     std::cout << "Enter an integer between -100 and 100: ";
-    
+
     if (!(std::cin >> second_integer)) {
 
         std::cout << "Error: Invalid input." << std::endl;
@@ -93,3 +93,5 @@ std::string getConstructedString(int first_integer, int second_integer, const In
 
     return std::format("{}{}{}", convertIntegerToText(first_integer, words), comp, convertIntegerToText(second_integer, words));
 }
+
+
