@@ -62,10 +62,10 @@ int main() {
     return EXIT_SUCCESS;
 }
 
-std::string convertIntegerToText(int integer, const IntegersInWords& words) {
+std::string convertIntegerToString(int integer, const IntegersInWords& words) {
 
     if (integer < 0)
-        return std::format("{} {}", words.minus, convertIntegerToText(-integer, words));
+        return std::format("{} {}", words.minus, convertIntegerToString(-integer, words));
 
     if (integer == 0)
         return words.zero;
@@ -92,7 +92,7 @@ std::string getConstructedString(int first_integer, int second_integer, const In
                                             : " equal to "
     };
 
-    return std::format("{}{}{}", convertIntegerToText(first_integer, words), comp, convertIntegerToText(second_integer, words));
+    return std::format("{}{}{}", convertIntegerToString(first_integer, words), comp, convertIntegerToString(second_integer, words));
 }
 
 
