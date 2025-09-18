@@ -85,14 +85,14 @@ bool readInteger(int& value, int min, int max) {
 
     if (!(std::cin >> value)) {
 
-        std::cout << "Invalid input: not an integer." << std::endl;
+        std::cerr << "Invalid input: not an integer." << std::endl;
 
         return false;
     }
 
     if (value < min || value > max) {
 
-        std::cout << "Error: number must be between " << min << " and " << max << "." << std::endl;
+        std::cerr << std::format("Error: number must be between {} and {}.", min, max) << std::endl;
 
         return false;
     }
