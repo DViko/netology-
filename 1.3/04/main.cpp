@@ -26,6 +26,7 @@ struct IntegersInWords {
 
 bool        readInteger(int& value, int min, int max);
 std::string getConstructedString(int first_integer, int second_integer, const IntegersInWords& words);
+std::string convertIntegerToString(int integer, const IntegersInWords& words);
 
 
 int main() {
@@ -48,6 +49,38 @@ int main() {
     return EXIT_SUCCESS;
 }
 
+
+bool readInteger(int& value, int min, int max) {
+
+    if (!(std::cin >> value)) {
+
+        std::cerr << "Invalid input: not an integer." << std::endl;
+
+        return false;
+    }
+
+    if (value < min || value > max) {
+
+        std::cerr << std::format("Error: number must be between {} and {}.", min, max) << std::endl;
+
+        return false;
+    }
+
+    return true;
+}
+
+std::string getConstructedString(int first_integer, int second_integer, const IntegersInWords& words) {
+
+    std::string comp{
+
+        (first_integer < second_integer)    ? " less than "
+        : (first_integer > second_integer)  ? " greater than "
+                                            : " equal to "
+    };
+
+    return std::format("{}{}{}", convertIntegerToString(first_integer, words), comp, convertIntegerToString(second_integer, words));
+}
+
 std::string convertIntegerToString(int integer, const IntegersInWords& words) {
 
     if (integer < 0)
@@ -67,37 +100,6 @@ std::string convertIntegerToString(int integer, const IntegersInWords& words) {
 
     return units_part == 0 ? words.tens[tens_part] 
                            : std::format("{} {}", words.tens[tens_part], words.units[units_part]);
-}
-
-std::string getConstructedString(int first_integer, int second_integer, const IntegersInWords& words) {
-
-    std::string comp{
-
-        (first_integer < second_integer)    ? " less than "
-        : (first_integer > second_integer)  ? " greater than "
-                                            : " equal to "
-    };
-
-    return std::format("{}{}{}", convertIntegerToString(first_integer, words), comp, convertIntegerToString(second_integer, words));
-}
-
-bool readInteger(int& value, int min, int max) {
-
-    if (!(std::cin >> value)) {
-
-        std::cerr << "Invalid input: not an integer." << std::endl;
-
-        return false;
-    }
-
-    if (value < min || value > max) {
-
-        std::cerr << std::format("Error: number must be between {} and {}.", min, max) << std::endl;
-
-        return false;
-    }
-
-    return true;
 }
 
 
