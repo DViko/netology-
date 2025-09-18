@@ -24,7 +24,9 @@ struct IntegersInWords {
     std::string zero{"zero"};
 };
 
+bool checkInteger(int integer);
 std::string getConstructedString(int first_integer, int second_integer, const IntegersInWords& words);
+
 
 int main() {
 
@@ -32,29 +34,16 @@ int main() {
     int first_integer{0}, second_integer{0};
 
     std::cout << "Enter an integer between -100 and 100: ";
+    std::cin >> first_integer;
 
-    if (!(std::cin >> first_integer)) {
-
-        std::cout << "Error: Invalid input." << std::endl;
-
+    if (!checkInteger(first_integer)) 
         return EXIT_FAILURE;
-    }
 
     std::cout << "Enter an integer between -100 and 100: ";
+    std::cin >> second_integer;
 
-    if (!(std::cin >> second_integer)) {
-
-        std::cout << "Error: Invalid input." << std::endl;
-
+    if (!checkInteger(second_integer)) 
         return EXIT_FAILURE;
-    }
-
-    if (first_integer < -100 || first_integer > 100 || second_integer < -100 || second_integer > 100) {
-
-        std::cout << "Error: Numbers must be between -100 and 100." << std::endl;
-
-        return EXIT_FAILURE;
-    }
 
     std::cout << getConstructedString(first_integer, second_integer, words) << std::endl;
 
@@ -95,3 +84,21 @@ std::string getConstructedString(int first_integer, int second_integer, const In
 }
 
 
+bool checkInteger(int integer) {
+
+    if (!integer) {
+
+        std::cout << "Error: Invalid input." << std::endl;
+
+        return false;
+    }
+
+    if (integer < -100 || integer > 100) {
+
+        std::cout << "Error: Numbers must be between -100 and 100." << std::endl;
+
+        return false;
+    }
+
+    return true;
+}
