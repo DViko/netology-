@@ -2,15 +2,15 @@
 
 int main() {
     
-    int input_number{0}, result{0};
+    int input_value{0}, result{0};
 
     do {
         std::cout << "Inter an integer or 0 for exit and get result: ";
-        std::cin >> input_number;
+        std::cin >> input_value;
 
-        result += input_number; 
+        result += input_value;
 
-    } while (input_number != 0);
+    } while (input_value != 0);
 
     std::cout << "The result is: " << result << std::endl;
 

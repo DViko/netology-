@@ -3,6 +3,7 @@
 int main() {
 
     int input_value{0};
+    
     std::cout << "Enter an integer value: ";
     std::cin >> input_value;
 
