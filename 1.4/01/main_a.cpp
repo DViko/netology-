@@ -12,7 +12,7 @@ int main() {
 
     } while (input_value != 0);
 
-    std::cout << "The result is: " << result << std::endl;
+    std::cout << "Result is: " << result << std::endl;
 
     return EXIT_SUCCESS;
 }
