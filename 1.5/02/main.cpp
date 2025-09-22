@@ -11,7 +11,7 @@ int main() {
 
     std::cout << "Source array: ";
 
-    for (int i = 1; i < SIZE; ++i) {
+    for (int i = 1; i < SIZE; i ++) {
 
         if (array[i] < min) min = array[i];
         if (array[i] > max) max = array[i];
