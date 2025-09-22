@@ -1,51 +1,57 @@
 #include <iostream>
-#include <functional>
 
-void arraySort(int array[], int size, std::function<bool(int, int)> comparator);
-void printResult(int array[], int size);
+void reverseBubbleSort(int array[], int size);
+void printArray(const int array[], int size);
 
 int main() {
 
-    int int_array[]{64, 34, 25, 12, 22, 11, 90};
+    int array[10]{45, -32, 11, 95, -81, 3, 54, 73, 5, 19};
+    constexpr int SIZE{sizeof(array) / sizeof(array[0])};
 
-    int array_size{sizeof(int_array)/sizeof(int_array[0])};
+    std::cout << "Source array: ";
 
-    arraySort(int_array, array_size, [](int a, int b) { return a > b; });
+    printArray(array, SIZE);
 
-    printResult(int_array, array_size);
+    std::cout << "Reverse bubble sort: ";
+
+    reverseBubbleSort(array, SIZE);
+
+    printArray(array, SIZE);
 
     return EXIT_SUCCESS;
 }
 
-void arraySort(int array[], int array_size, std::function<bool(int, int)> comparator) {
+void reverseBubbleSort(int array[], int size) {
 
-    bool is_swapped{false};
-    int pass{0};
+    for (int i = 0; i < size - 1; i ++) {
 
-    do {
+        bool swapped{false};
 
-        is_swapped = false;
+        for (int j = size - 1; j > i; j --) {
 
-        for (int j = 0; j < array_size - pass -1; j ++) {
+            if (array[j] < array[ j - 1 ]) {
 
-            if (comparator(array[j], array[ j + 1 ])) {
+                int buffer{array[j]};
 
-                is_swapped = true;
+                array[j] = array[ j - 1 ];
+                array[ j - 1 ] = buffer;
 
-                std::swap(array[j], array[ j + 1 ]);
+                swapped = true;
             }
         }
 
-        pass ++;
-
-    } while (is_swapped);
+        if (!swapped) break;
+    }
 }
 
-void printResult(int array[], int size) {
+void printArray(const int array[], int size) {
+    
+    for (int i = 0; i < size; i ++) {
 
-    std::cout << "Result: ";
+        std::cout << array[i];
 
-    for (int i = 0; i < size; ++i) std::cout << array[i] << " ";
+        if (i < size - 1) std::cout << " ";
+    }
 
-    std::cout << std::endl;
+    std::cout << "\n";
 }
