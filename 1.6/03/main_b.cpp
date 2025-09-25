@@ -3,7 +3,7 @@
 
 int main() {
 
-    //ToDo: Fibonacci Numbers: Iterative
+    //ToDo: Fibonacci Numbers: Iterative type
     
     return EXIT_SUCCESS;
 }

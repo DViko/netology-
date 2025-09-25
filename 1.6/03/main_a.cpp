@@ -16,10 +16,7 @@ int main() {
 
     std::cout << "Input an integer between 1 and 91: ";
     
-    if (!readInteger(value)) {
-
-        return EXIT_FAILURE;
-    }
+    if (!readInteger(value)) { return EXIT_FAILURE; }
 
     for (int i = 0; i < value; i ++) {
 
@@ -33,7 +30,7 @@ int main() {
 
 bool readInteger(int& value) {
 
-     if (!(std::cin >> value)) {
+    if (!(std::cin >> value)) {
 
         std::cout << "Invalid input: not an integer.\n" << std::endl;
 
@@ -52,10 +49,10 @@ bool readInteger(int& value) {
 
 long long getFibonacciDigits(int index, std::array<long long, 91>& buffer) {
 
-    if (index == 0) return 0;
-    if (index == 1) return 1;
+    if (index == 0) { return 0; }
+    if (index == 1) { return 1; }
 
-    if (buffer[index] != -1) return buffer[index];
+    if (buffer[index] != -1) { return buffer[index]; }
 
     buffer[index] = getFibonacciDigits(index - 1, buffer) + getFibonacciDigits(index - 2, buffer);
 
