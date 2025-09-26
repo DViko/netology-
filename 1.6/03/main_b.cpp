@@ -49,12 +49,12 @@ bool readInteger(int& value) {
     return true;
 }
 
-void getFibonacciDigits(int n, std::vector<cpp_int>& buffer) {
+void getFibonacciDigits(int index, std::vector<cpp_int>& buffer) {
 
-    if (n >= 1) buffer[0] = 0;
-    if (n >= 2) buffer[1] = 1;
+    if (index >= 1) buffer[0] = 0;
+    if (index >= 2) buffer[1] = 1;
 
-    for (int i = 2; i < n; i++) {
+    for (int i = 2; i < index; i++) {
 
         buffer[i] = buffer[i - 1] + buffer[i - 2];
     }
