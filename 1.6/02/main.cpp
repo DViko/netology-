@@ -9,7 +9,7 @@ struct Items {
 };
 
 
-int calculatePower(int value, int power);
+int  calculatePower(int value, int power);
 void printResult(int value, int power, int result);
 
 

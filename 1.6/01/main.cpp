@@ -1,10 +1,10 @@
 #include <iostream>
 #include <format>
 
-int getSum(int a, int b);
-int getDiff(int a, int b);
-int getMultiplication(int a, int b);
-double getDivision(int a, int b);
+int     getSum(int a, int b);
+int     getDiff(int a, int b);
+int     getMultiplication(int a, int b);
+double  getDivision(int a, int b);
 
 
 int main (int argc, char ** argv) {

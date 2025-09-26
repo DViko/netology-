@@ -38,6 +38,7 @@ bool readInteger(int& value) {
 
         return false;
     }
+    
     if (value <= 0) {
 
         std::cout << "Error: The integer must be positive and greter than zero.\n";
