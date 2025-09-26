@@ -12,8 +12,8 @@ int main() {
 
     int value{0};
 
-    std::cout << "Please, do not use too large numbers.\n";
-    std::cout << "Input a positive numbers greter than zero: ";
+    std::cout << "Please, do not use too large numbers. Something like 0xF4240 \n";
+    std::cout << "Input a positive number greter than zero: ";
 
     if (!readInteger(value)) {
 
