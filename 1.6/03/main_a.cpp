@@ -39,7 +39,7 @@ bool readInteger(int& value) {
 
     if (value <= 0 || value > 91) {
 
-        std::cout << "Error: The integer must be between 1 and 91.\n";
+        std::cout << "Error: Integer must be between 1 and 91.\n";
 
         return false;
     }
