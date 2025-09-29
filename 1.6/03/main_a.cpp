@@ -1,11 +1,9 @@
 #include <iostream>
 #include <array>
-#include <algorithm>
 
 bool        readInteger(int& value);
 long long   getFibonacciDigits(int index, std::array<long long, 91>& buffer);
 void        printResult(int size, const std::array<long long, 91>& result);
-
 
 int main() {
 
