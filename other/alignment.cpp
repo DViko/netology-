@@ -14,6 +14,6 @@ struct Good {
 
 int main() {
     
-    std::cout << "Size of Bad: " << sizeof(Bad) << "\n";   // Likely 24 due to padding
-    std::cout << "Size of Good: " << sizeof(Good) << "\n"; // Likely 16, more compact
+    std::cout << "Size of Bad: " << sizeof(Bad) << "\n";   // 24 , less compact
+    std::cout << "Size of Good: " << sizeof(Good) << "\n"; // 16 , more compact
 }
