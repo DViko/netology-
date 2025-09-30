@@ -7,11 +7,11 @@ int main(int argc, char* argv[]) {
 
     int x {3}, y {7};
     
-    std::cout << "a = " << x << ", b = " << y << "\n";
+    std::cout << "x = " << x << ", y = " << y << "\n";
 
     binarySwap(x, y);
 
-    std::cout << "a = " << x << ", b = " << y << "\n";
+    std::cout << "x = " << x << ", y = " << y << "\n";
 
     return EXIT_SUCCESS;
 }

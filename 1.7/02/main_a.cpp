@@ -5,13 +5,13 @@ void classicSwap(int& x, int& y);
 
 int main(int argc, char* argv[]) {
 
-    int a{10}, b{4};
+    int x{10}, y{4};
 
-    std::cout << "a = " << a << ", b = " << b << "\n";
+    std::cout << "x = " << x << ", y = " << y << "\n";
 
-    classicSwap(a, b);
+    classicSwap(x, y);
 
-    std::cout << "a = " << a << ", b = " << b << "\n";
+    std::cout << "x = " << x << ", y = " << y << "\n";
 
     return EXIT_SUCCESS;
 }
