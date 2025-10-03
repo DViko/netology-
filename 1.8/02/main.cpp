@@ -25,7 +25,6 @@ void printLine(const std::string& operation, int value);
 
 int main()
 {
-
     int x {15}, y {5};
 
     std::cout << "x = " << x << ", y = " << y << "\n";
