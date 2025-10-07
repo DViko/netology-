@@ -1,6 +1,6 @@
 #include <iostream>
 
-void reverse(int array[], int* end);
+void reverse(int* begin, int* end);
 void swap(int* x, int* y);
 void print (const int array[], int size);
 
