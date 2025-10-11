@@ -40,7 +40,7 @@ bool CreateAndFillArray(int*& array, int size)
 {
     if (size <= 0)
     {
-        std::cout << "Error: Array size must be a positive integer.\n";
+        std::cout << "Error: Array size must be a positive integer and greater than zero.\n";
 
         return false;
     }
