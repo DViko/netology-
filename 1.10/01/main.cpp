@@ -26,8 +26,8 @@ int main()
 
 bool CheckInsert(int& value)
 {
-    if (!(std::cin >> value)) {
-
+    if (!(std::cin >> value))
+    {
         std::cout << "Invalid input: not an integer.\n";
 
         return false;
