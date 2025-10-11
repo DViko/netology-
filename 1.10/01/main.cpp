@@ -1,6 +1,6 @@
 #include <iostream>
 
-bool CheckInsert(int& value);
+bool ReadValue(int& value);
 bool CreateAndFillArray(int*& array, int size);
 void PrintArray(const int* array, int size);
 
@@ -11,7 +11,7 @@ int main()
 
     std::cout << "Enter the size of the array: ";
 
-    if(CheckInsert(size) && CreateAndFillArray(array, size))
+    if(ReadValue(size) && CreateAndFillArray(array, size))
     {
         PrintArray(array, size);
 
@@ -24,7 +24,7 @@ int main()
     return EXIT_FAILURE;
 }
 
-bool CheckInsert(int& value)
+bool ReadValue(int& value)
 {
     if (!(std::cin >> value))
     {
@@ -60,7 +60,7 @@ bool CreateAndFillArray(int*& array, int size)
     {
         std::cout << "Enter element " << i + 1 << ": ";
 
-        if(!CheckInsert(array[i]))
+        if(!ReadValue(array[i]))
         {
             delete[] array;
             array = nullptr;

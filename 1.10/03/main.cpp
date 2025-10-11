@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <limits>
 
-bool ReadPositiveInt(const std::string& string, int& value, int max_size);
+bool ReadValue(const std::string& string, int& value, int max_size);
 bool GetArrayDimensions(int& rows, int& cols, int max_size);
 bool ShowAttentionMessage(int rows, int cols, int warning_threshold);
 int* CreateTwoDimArray(int rows, int cols);
@@ -44,7 +44,7 @@ int main()
     return EXIT_SUCCESS;
 }
 
-bool ReadPositiveInt(const std::string& string, int& value, int max_size)
+bool ReadValue(const std::string& string, int& value, int max_size)
 {
     std::cout << string;
 
@@ -63,8 +63,8 @@ bool ReadPositiveInt(const std::string& string, int& value, int max_size)
 
 bool GetArrayDimensions(int& rows, int& cols, int max_size)
 {
-    return ReadPositiveInt("Enter number of columns: ", cols, max_size) &&
-           ReadPositiveInt("Enter number of rows: ", rows, max_size);
+    return ReadValue("Enter number of columns: ", cols, max_size) &&
+           ReadValue("Enter number of rows: ", rows, max_size);
 }
 
 bool ShowAttentionMessage(int rows, int cols, int warning_threshold)

@@ -1,18 +1,18 @@
 #include <iostream>
 
-bool    IsValidValue(int& value);
+bool    ReadValue(int& value);
 double* CreateAndFillArray(double* array, int size);
 void    PrintArray(double* array, int size);
 void    DeleteArray(double*& array);
 
 int main()
 {
-    double* array {nullptr};
     int size {0};
+    double* array {nullptr};
 
     std::cout << "Enter the size of the array: ";
 
-    if (IsValidValue(size))
+    if (ReadValue(size))
     {
         array = CreateAndFillArray(array, size);
 
