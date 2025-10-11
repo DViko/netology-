@@ -1,8 +1,8 @@
 #include <iostream>
 
 bool CheckInsert(int& value);
-bool CreateAndFillArray(int* &array, int size);
-void PrintArray(int* array, int size);
+bool CreateAndFillArray(int*& array, int size);
+void PrintArray(const int* array, int size);
 
 int main()
 {
@@ -10,7 +10,7 @@ int main()
     int* array {nullptr};
 
     std::cout << "Enter the size of the array: ";
-    
+
     if(CheckInsert(size) && CreateAndFillArray(array, size))
     {
         PrintArray(array, size);
@@ -36,7 +36,7 @@ bool CheckInsert(int& value)
     return true;
 }
 
-bool CreateAndFillArray(int* &array, int size)
+bool CreateAndFillArray(int*& array, int size)
 {
     if (size <= 0)
     {
@@ -72,7 +72,7 @@ bool CreateAndFillArray(int* &array, int size)
     return true;
 }
 
-void PrintArray(int* array, int size)
+void PrintArray(const int* array, int size)
 {
     std::cout << "Array elements: ";
 

@@ -1,8 +1,9 @@
 #include <iostream>
 
-bool CheckInsert(int& value);
-bool CreateAndFillArray(double* &array, int size);
-void PrintArray(double* array, int size);
+bool    IsValidValue(int& value);
+double* CreateAndFillArray(double* array, int size);
+void    PrintArray(double* array, int size);
+void    DeleteArray(double*& array);
 
 int main()
 {
@@ -11,12 +12,17 @@ int main()
 
     std::cout << "Enter the size of the array: ";
 
-    if (CheckInsert(size) && CreateAndFillArray(array, size))
+    if (IsValidValue(size))
     {
-        PrintArray(array, size);
+        array = CreateAndFillArray(array, size);
 
-        delete[] array;
-        array = nullptr;
+        if (array == nullptr)
+        {
+            return EXIT_FAILURE;
+        }
+
+        PrintArray(array, size);
+        DeleteArray(array);
 
         return EXIT_SUCCESS;
     }
@@ -24,7 +30,7 @@ int main()
     return EXIT_FAILURE;
 }
 
-bool CheckInsert(int& value)
+bool IsValidValue(int& value)
 {
     if (!(std::cin >> value) || value <= 0)
     {
@@ -36,20 +42,18 @@ bool CheckInsert(int& value)
     return true;
 }
 
-bool CreateAndFillArray(double* &array, int size)
+double* CreateAndFillArray(double* array, int size)
 {
     try
     {
-        array = new double[size]();
+        return new double[size]();
     }
     catch (const std::bad_alloc& error)
     {
         std::cout << "Error: Memory allocation failed: " << error.what() << "\n";
 
-        return false;
+        return nullptr;
     }
-
-    return true;
 }
 
 void PrintArray(double* array, int size)
@@ -59,5 +63,14 @@ void PrintArray(double* array, int size)
     for (int i {0}; i < size; i ++)
     {
         std::cout << array[i] << (i < size - 1 ? ", " : "\n");
+    }
+}
+
+void DeleteArray(double*& array)
+{
+    if (array != nullptr)
+    {
+        delete[] array;
+        array = nullptr;
     }
 }
