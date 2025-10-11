@@ -71,10 +71,10 @@ bool ShowAttentionMessage(int rows, int cols, int warning_threshold)
 {
     if (rows * cols > warning_threshold)
     {
-        double totalBytes = static_cast<double>(rows * cols) * sizeof(int);
+        double total_bytes = static_cast<double>(rows * cols) * sizeof(int);
         char answer {'n'};
 
-        std::cout   << "\nAttention: This may require ~ " << totalBytes / (1024 * 1024) << " MB of memory.\n\n"
+        std::cout   << "\nAttention: This may require ~ " << total_bytes / (1024 * 1024) << " MB of memory.\n\n"
                     << "Do you want to continue? (y/n): ";
 
         std::cin >> answer;
