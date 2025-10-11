@@ -96,11 +96,9 @@ bool ShowAttentionMessage(int rows, int cols, int warning_threshold)
 
 int* CreateTwoDimArray(int rows, int cols)
 {
-    int* array {nullptr};
-
     try
     {
-        array = new int[rows * cols];
+        return new int[rows * cols];
     }
     catch (const std::bad_alloc& error)
     {
@@ -108,8 +106,6 @@ int* CreateTwoDimArray(int rows, int cols)
 
         return nullptr;
     }
-
-    return array;
 }
 
 void FillTwoDimArray(int* array, int rows, int cols)
