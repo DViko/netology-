@@ -2,42 +2,43 @@
 #include <iomanip>
 #include <limits>
 
-int* CreateTwoDimArray(int cols, int rows);
-void FillTwoDimArray(int* array, int cols, int rows);
-void PrintTwoDimArray(const int* array, int cols, int rows);
+// Two-dimensional array in one-dimensional representation
+
+int* CreateTwoDimArray(int rows, int cols);
+void FillTwoDimArray(int* array, int rows, int cols);
+void PrintTwoDimArray(const int* array, int rows, int cols);
 void DeleteTwoDimArray(int*& array);
 
 
 int main()
 {
-    int cols {0}, rows {0};
+    int rows {0}, cols {0};
     int* array {nullptr};
 
-    std::cout << "Inter number of columns: ";
-    std::cin >> cols;
-    std::cout << "Inter number of rows: ";
+    std::cout << "Enter number of rows: ";
     std::cin >> rows;
+    std::cout << "Enter number of columns: ";
+    std::cin >> cols;
 
-    array = CreateTwoDimArray(cols, rows);
+    array = CreateTwoDimArray(rows, cols);
 
     if (array == nullptr)
     {
         return EXIT_FAILURE;
     }
 
-    FillTwoDimArray(array, cols, rows);
-    PrintTwoDimArray(array, cols, rows);
-
+    FillTwoDimArray(array, rows, cols);
+    PrintTwoDimArray(array, rows, cols);
     DeleteTwoDimArray(array);
 
     return EXIT_SUCCESS;
 }
 
-int* CreateTwoDimArray(int cols, int rows)
+int* CreateTwoDimArray(int rows, int cols)
 {
     try
     {
-        return new int[cols * rows];
+        return new int[rows * cols];
     }
     catch (const std::bad_alloc& error)
     {
@@ -47,26 +48,26 @@ int* CreateTwoDimArray(int cols, int rows)
     }
 }
 
-void FillTwoDimArray(int* array, int cols, int rows)
-{   
-    for (int col {0}; col < cols; col ++)
+void FillTwoDimArray(int* array, int rows, int cols)
+{
+    for (int row {0}; row < rows; row ++)
     {
-        for (int row {0}; row < rows; row ++)
+        for (int col = 0; col < cols; ++col)
         {
-            array[col * rows + row] = (col + 1) * (row + 1);
+            array[row * cols + col] = (row + 1) * (col + 1);
         }
     }
 }
 
-void PrintTwoDimArray(const int* array, int cols, int rows)
+void PrintTwoDimArray(const int* array, int rows, int cols)
 {
-    int cell_width = std::to_string(cols * rows).length() + 2;
-    
-    for (int col {0}; col < cols; col ++)
+    int cell_width = std::to_string(rows * cols).length() + 2;
+
+    for (int row = 0; row < rows; row ++)
     {
-        for (int row {0}; row < rows; row ++)
+        for (int col = 0; col < cols; col ++)
         {
-            std::cout << std::setw(cell_width) << array[col * rows + row];
+            std::cout << std::setw(cell_width) << array[row * cols + col];
         }
 
         std::cout << "\n";
