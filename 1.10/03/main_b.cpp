@@ -38,7 +38,7 @@ int* CreateTwoDimArray(int rows, int cols)
 {
     try
     {
-        return new int[rows * cols];
+        return new int [rows * cols];
     }
     catch (const std::bad_alloc& error)
     {

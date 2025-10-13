@@ -45,11 +45,11 @@ int** CreateTwoDimArray(int cols, int rows)
 {
     try
     {
-        int** array = new int*[rows]();
+        int** array = new int* [rows]();
 
         for (int row {0}; row < rows; row ++)
         {
-            array[row] = new int[cols]();
+            array[row] = new int [cols]();
         }
 
         return array;
