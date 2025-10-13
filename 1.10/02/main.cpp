@@ -30,7 +30,7 @@ int main()
     return EXIT_FAILURE;
 }
 
-bool IsValidValue(int& value)
+bool ReadValue(int& value)
 {
     if (!(std::cin >> value) || value <= 0)
     {
