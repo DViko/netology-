@@ -1,10 +1,11 @@
 #include <iostream>
 #include <iomanip>
 
-int** CreateTwoDimArray(int cols, int rows);
+
+int** CreateTwoDimArray(int rows, int cols);
 void FillTwoDimArray(int** array, int cols, int rows);
 void PrintTwoDimArray(int** array, int cols, int rows);
-void DeleteTwoDimArray(int** array, int cols);
+void DeleteTwoDimArray(int** array, int rows);
 
 
 int main()
@@ -35,7 +36,7 @@ int main()
     FillTwoDimArray(array, cols, rows);
     PrintTwoDimArray(array, cols, rows);
 
-    DeleteTwoDimArray(array, cols);
+    DeleteTwoDimArray(array, rows);
 
     return EXIT_SUCCESS;
 }
@@ -44,11 +45,11 @@ int** CreateTwoDimArray(int cols, int rows)
 {
     try
     {
-        int** array = new int*[cols]();
+        int** array = new int*[rows]();
 
-        for (int col {0}; col < cols; col ++)
+        for (int row {0}; row < rows; row ++)
         {
-            array[col] = new int[rows]();
+            array[row] = new int[cols]();
         }
 
         return array;
@@ -63,11 +64,11 @@ int** CreateTwoDimArray(int cols, int rows)
 
 void FillTwoDimArray(int** array, int cols, int rows)
 {
-    for (int col {0}; col < cols; col ++)
+    for (int row {0}; row < rows; row ++)
     {
-        for (int row {0}; row < rows; row ++)
+        for (int col {0}; col < cols; col ++)
         {
-            array[col][row] = (col + 1) * (row + 1);
+            array[row][col] = (row + 1) * (col + 1);
         }
     }
 }
@@ -76,11 +77,11 @@ void PrintTwoDimArray(int** array, int cols, int rows)
 {
     int cell_width = std::to_string(rows * cols).length() + 2;
     
-    for (int col {0}; col < cols; col ++)
+    for (int row {0}; row < rows; row ++)
     {
-        for (int row {0}; row < rows; row ++)
+        for (int col {0}; col < cols; col ++)
         {
-            std::cout << std::setw(cell_width) << array[col][row];
+            std::cout << std::setw(cell_width) << array[row][col];
         }
 
         std::cout << "\n";
@@ -89,11 +90,11 @@ void PrintTwoDimArray(int** array, int cols, int rows)
     std::cout << "\n";
 }
 
-void DeleteTwoDimArray(int** array, int cols)
+void DeleteTwoDimArray(int** array, int rows)
 {
-    for (int col{0}; col < cols; col ++)
+    for (int row {0}; row < rows; row ++)
     {
-        delete[] array[col];
+        delete[] array[row];
     }
 
     delete[] array;
