@@ -5,7 +5,7 @@
 int** CreateTwoDimArray(int cols, int rows);
 void FillTwoDimArray(int** array, int cols, int rows);
 void PrintTwoDimArray(int** array, int cols, int rows);
-void DeleteTwoDimArray(int**& array, int cols);
+void DeleteTwoDimArray(int** array, int cols);
 
 int main()
 {
@@ -14,12 +14,14 @@ int main()
 
     std::cout << "Inter number of columns: ";
     std::cin >> cols;
+
     std::cout << "Inter number of rows: ";
     std::cin >> rows;
 
     if (cols <= 0 || rows <= 0)
     {
         std::cout << "Error: Number of rows and columns must be positive integers greater than zero.\n";
+
         return EXIT_FAILURE;
     }
 
@@ -87,7 +89,7 @@ void PrintTwoDimArray(int** array, int cols, int rows)
     std::cout << "\n";
 }
 
-void DeleteTwoDimArray(int**& array, int cols)
+void DeleteTwoDimArray(int** array, int cols)
 {
     for (int col{0}; col < cols; col ++)
     {
@@ -95,5 +97,4 @@ void DeleteTwoDimArray(int**& array, int cols)
     }
 
     delete[] array;
-    array = nullptr;
 }
