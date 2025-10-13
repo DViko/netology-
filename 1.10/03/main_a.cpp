@@ -75,7 +75,7 @@ void FillTwoDimArray(int** array, int cols, int rows)
 
 void PrintTwoDimArray(int** array, int cols, int rows)
 {
-    int cell_width = std::to_string(rows * cols).length() + 2;
+    int cell_width {std::to_string(rows * cols).length() + 2};
     
     for (int row {0}; row < rows; row ++)
     {
