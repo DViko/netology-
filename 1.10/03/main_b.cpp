@@ -17,6 +17,7 @@ int main()
 
     std::cout << "Enter number of rows: ";
     std::cin >> rows;
+    
     std::cout << "Enter number of columns: ";
     std::cin >> cols;
 
@@ -38,7 +39,7 @@ int* CreateTwoDimArray(int rows, int cols)
 {
     try
     {
-        return new int [rows * cols];
+        return new int[rows * cols];
     }
     catch (const std::bad_alloc& error)
     {
@@ -50,9 +51,9 @@ int* CreateTwoDimArray(int rows, int cols)
 
 void FillTwoDimArray(int* array, int rows, int cols)
 {
-    for (int row {0}; row < rows; row ++)
+    for (int row {0}; row < rows; row++)
     {
-        for (int col {0}; col < cols; col)
+        for (int col {0}; col < cols; col++)
         {
             array[row * cols + col] = (row + 1) * (col + 1);
         }
@@ -61,11 +62,11 @@ void FillTwoDimArray(int* array, int rows, int cols)
 
 void PrintTwoDimArray(const int* array, int rows, int cols)
 {
-    int cell_width {std::to_string(rows * cols).length() + 2};
+    int cell_width = std::to_string(rows * cols).length() + 2;
 
-    for (int row {0}; row < rows; row ++)
+    for (int row {0}; row < rows; row++)
     {
-        for (int col {0}; col < cols; col ++)
+        for (int col {0}; col < cols; col++)
         {
             std::cout << std::setw(cell_width) << array[row * cols + col];
         }
