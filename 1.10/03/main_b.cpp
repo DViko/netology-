@@ -52,7 +52,7 @@ void FillTwoDimArray(int* array, int rows, int cols)
 {
     for (int row {0}; row < rows; row ++)
     {
-        for (int col = 0; col < cols; ++col)
+        for (int col {0}; col < cols; col)
         {
             array[row * cols + col] = (row + 1) * (col + 1);
         }
@@ -63,9 +63,9 @@ void PrintTwoDimArray(const int* array, int rows, int cols)
 {
     int cell_width = std::to_string(rows * cols).length() + 2;
 
-    for (int row = 0; row < rows; row ++)
+    for (int row {0}; row < rows; row ++)
     {
-        for (int col = 0; col < cols; col ++)
+        for (int col {0}; col < cols; col ++)
         {
             std::cout << std::setw(cell_width) << array[row * cols + col];
         }
