@@ -1,11 +1,11 @@
 #include <iostream>
 #include <iomanip>
 
-
 int** CreateTwoDimArray(int cols, int rows);
 void FillTwoDimArray(int** array, int cols, int rows);
 void PrintTwoDimArray(int** array, int cols, int rows);
 void DeleteTwoDimArray(int** array, int cols);
+
 
 int main()
 {
@@ -48,7 +48,7 @@ int** CreateTwoDimArray(int cols, int rows)
 
         for (int col {0}; col < cols; col ++)
         {
-            array[col] = new int[cols]();
+            array[col] = new int[rows]();
         }
 
         return array;
