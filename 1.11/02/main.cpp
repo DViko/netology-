@@ -7,8 +7,7 @@
 
 const std::array<std::string, 5> fruits
 {
-    "apple", "pear", "orange", 
-    "raspberry", "watermelon"
+    "apple", "pear", "orange", "raspberry"
 };
 
 
