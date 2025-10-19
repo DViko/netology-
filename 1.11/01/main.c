@@ -68,12 +68,7 @@ int main(void) {
     capacity = strlen(dialog[2]) + strlen(name) + strlen(surname) + EXTRA_CHARS;
     buffer = ReallocateBuffer(buffer, capacity);
 
-    if (!buffer) {
-
-        CleanMemory(&name);
-        CleanMemory(&surname);
-        ExitWithError(NULL, dialog[2]);
-    }
+    if (!buffer) ExitWithError(NULL, dialog[2]);
 
     printf("%s\n", StrConstruct(buffer, name, surname, dialog[3]));
 
