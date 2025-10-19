@@ -123,8 +123,6 @@ char *ReadValue(char *buffer, size_t capacity, const char *prompt) {
 
     printf("%s", prompt);
 
-    if (!buffer) return NULL;
-
     size_t length = 0;
     int ch = 0;
 
