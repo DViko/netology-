@@ -63,16 +63,13 @@ int main(void) {
     ReadValue(buffer, capacity, dialog[1]);
     char *surname = strdup(buffer);
 
-    if (!name || !surname) {
-
-        ExitWithError(buffer, dialog[2]);
-    }
+    if (!name || !surname) ExitWithError(buffer, dialog[2]);
 
     capacity = strlen(dialog[2]) + strlen(name) + strlen(surname) + EXTRA_CHARS;
     buffer = ReallocateBuffer(buffer, capacity);
 
     if (!buffer) {
-        
+
         CleanMemory(&name);
         CleanMemory(&surname);
         ExitWithError(NULL, dialog[2]);
