@@ -19,7 +19,7 @@ typedef enum Ascii {
 /**
  * @brief Predefined dialog messages used in the program.
  */
-static const char* dialog[] = {
+static const char *dialog[] = {
     "Insert your name: ",
     "Insert your surname: ",
     "Hello",
@@ -47,7 +47,7 @@ void                CleanMemory(char **pointer);
 /**
  * @brief Entry point of the program.
  * 
- * The program reads user's first name and surname,
+ * The program reads user's name and surname,
  * constructs a greeting message, and prints it to stdout.
  */
 int main(void) {
@@ -55,10 +55,7 @@ int main(void) {
     size_t capacity = INITIAL_BUFFER_SIZE;
     char *buffer = AllocateBuffer(capacity);
 
-    if (!buffer) {
-
-        ExitWithError(buffer, dialog[3]);
-    }
+    if (!buffer) ExitWithError(NULL, dialog[3]);
 
     ReadValue(buffer, capacity, dialog[0]);
     char *name = strdup(buffer);
@@ -73,12 +70,14 @@ int main(void) {
         ExitWithError(buffer, dialog[3]);
     }
 
-    size_t total = strlen(dialog[2]) + strlen(name) + strlen(surname) + EXTRA_CHARS;
-    buffer = ReallocateBuffer(buffer, total);
+    capacity = strlen(dialog[2]) + strlen(name) + strlen(surname) + EXTRA_CHARS;
+    buffer = ReallocateBuffer(buffer, capacity);
 
     if (!buffer) {
 
-        ExitWithError(buffer, dialog[3]);
+        CleanMemory(&name);
+        CleanMemory(&surname);
+        ExitWithError(NULL, dialog[3]);
     }
 
     StrConstruct(buffer, name, surname, dialog[2]);
@@ -117,10 +116,7 @@ char* ReadValue(char *buffer, size_t capacity, const char *prompt) {
 
     while ((ch = getchar()) != '\n' && ch != EOF) {
 
-        if (length < capacity - 1) {
-
-            buffer[length++] = (char)ch;
-        }
+        if (length < capacity - 1) buffer[length++] = (char)ch;
     }
 
     buffer[length] = '\0';
@@ -156,7 +152,7 @@ static inline char *ReallocateBuffer(char *buffer, size_t capacity) {
 }
 
 /**
- * @brief Appends a single character to a string buffer.
+ * @brief Appends a single character to a characters buffer.
  *
  * @param buffer Destination buffer.
  * @param ch     Character to append.
@@ -189,8 +185,7 @@ static inline void CatStr(char *buffer, const char *str, size_t *index) {
 /**
  * @brief Constructs a greeting message in the given buffer.
  * 
- * Example output format:
- *     "<greeting>, <name> <surname>!"
+ * Example output format: "<greeting>, <name> <surname>!"
  * 
  * @param buffer      Destination buffer.
  * @param name        User’s name.
@@ -200,7 +195,8 @@ static inline void CatStr(char *buffer, const char *str, size_t *index) {
  * 
  * @warning Modifies @p buffer contents.
  */
-char* StrConstruct(char *buffer, const char *name, const char *surname, const char *greeting) {
+char *StrConstruct(char *buffer, const char *name, const char *surname, const char *greeting) {
+
     size_t index = 0;
 
     CatStr(buffer, greeting, &index); CatChar(buffer, COMMA, &index);
@@ -223,7 +219,7 @@ char* StrConstruct(char *buffer, const char *name, const char *surname, const ch
  */
 void ExitWithError(char *buffer, const char *prompt) {
 
-    CleanMemory(&buffer);
+    if (buffer) CleanMemory(&buffer);
 
     fprintf(stderr, "%s\n", prompt);
     exit(EXIT_FAILURE);
