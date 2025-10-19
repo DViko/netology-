@@ -1,52 +1,61 @@
 #include <iostream>
 #include <fstream>
 
+void CleanMemory(int*& buffer);
+void ExitWithError(const char* prompt);
+
 int main()
 {
-    std::ifstream file("file.txt");
-    size_t length {0};
+    size_t capacity {0};
+    std::ifstream source ("file.txt");
 
-    if (!file.is_open())
+    if (!source.is_open())
     {
-
-        std::cerr << "Error: cannot open input file.\n";
-        return EXIT_FAILURE;
+        ExitWithError("Error: cannot open input file.");
     }
 
-    file >> length;
+    source >> capacity;
 
-    if (length == 0) 
+    if (capacity == 0)
     {
-        std::cerr << "Error: invalid array size.\n";
-
-        return EXIT_FAILURE;
+        ExitWithError("Error: invalid array size.");
     }
 
-    int* numbers { new(std::nothrow) int[length] };
+    int* buffer { new(std::nothrow) int[capacity] };
 
-    if (!numbers)
+    if (!buffer)
     {
-        std::cerr << "Error: memory allocation failed.\n";
-        return EXIT_FAILURE;
+        ExitWithError("Error: memory allocation failed.");
     }
 
-    for (size_t i = 0; i < length; i++)
+    for (size_t i {}; i < capacity; i++)
     {
-        if (!(file >> numbers[i]))
+        if (!(source >> buffer[i]))
         {
-            delete[] numbers;
-
-            std::cerr << "Error: failed to read array element.\n";
-            return EXIT_FAILURE;
+            CleanMemory(buffer);
+            ExitWithError("Error: failed to read element.");
         }
     }
 
-    for (size_t i = length; i-- > 0; )
+    source.close();
+
+    for (size_t i { capacity }; i-- > 0;)
     {
-        std::cout << numbers[i] << (i ? ' ' : '\n');
+        std::cout << buffer[i] << (i > 0 ? ", " : "\n");
     }
 
-    delete[] numbers;
-
+    CleanMemory(buffer);
     return EXIT_SUCCESS;
+}
+
+void CleanMemory(int*& pointer)
+{
+    delete[] pointer;
+    pointer = nullptr;
+}
+
+void ExitWithError(const char* prompt)
+{
+    std::cerr << prompt << '\n';
+    std::exit(EXIT_FAILURE);
 }
