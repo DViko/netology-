@@ -65,8 +65,6 @@ int main(void) {
 
     if (!name || !surname) {
 
-        CleanMemory(&name);
-        CleanMemory(&surname);
         ExitWithError(buffer, dialog[2]);
     }
 
@@ -74,15 +72,13 @@ int main(void) {
     buffer = ReallocateBuffer(buffer, capacity);
 
     if (!buffer) {
-
+        
         CleanMemory(&name);
         CleanMemory(&surname);
         ExitWithError(NULL, dialog[2]);
     }
 
-    StrConstruct(buffer, name, surname, dialog[3]);
-
-    printf("%s\n", buffer);
+    printf("%s\n", StrConstruct(buffer, name, surname, dialog[3]));
 
     CleanMemory(&name);
     CleanMemory(&surname);
@@ -131,7 +127,7 @@ static inline char *ReallocateBuffer(char *buffer, size_t capacity) {
  * 
  * @warning This function modifies the contents of @p buffer.
  */
-char* ReadValue(char *buffer, size_t capacity, const char *prompt) {
+char *ReadValue(char *buffer, size_t capacity, const char *prompt) {
 
     printf("%s", prompt);
 
