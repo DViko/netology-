@@ -1,61 +1,37 @@
 #include <iostream>
 #include <fstream>
 
-void CleanMemory(int*& buffer);
-void ExitWithError(const char* prompt);
-
 int main()
 {
-    size_t capacity {0};
+    int capacity {0};
+    int* buffer { nullptr };
+
     std::ifstream source ("file.txt");
 
     if (!source.is_open())
     {
-        ExitWithError("Error: cannot open input file.");
+        std::cout << "Error: cannot open input file.\n";
+        return EXIT_FAILURE;
     }
 
     source >> capacity;
 
-    if (capacity == 0)
-    {
-        ExitWithError("Error: invalid array size.");
-    }
+    buffer = new int[capacity]();
 
-    int* buffer { new(std::nothrow) int[capacity] };
-
-    if (!buffer)
+    for (int i {}; i < capacity; i++)
     {
-        ExitWithError("Error: memory allocation failed.");
-    }
-
-    for (size_t i {}; i < capacity; i++)
-    {
-        if (!(source >> buffer[i]))
-        {
-            CleanMemory(buffer);
-            ExitWithError("Error: failed to read element.");
-        }
+        source >> buffer[i];
     }
 
     source.close();
 
-    for (size_t i { capacity }; i-- > 0;)
+    for (int i { capacity - 1 }; i >= 0; i--)
     {
-        std::cout << buffer[i] << (i > 0 ? ", " : "\n");
+        std::cout << buffer[i] << ((i  > 0) ? ", " : "\n");
     }
 
-    CleanMemory(buffer);
+    delete[] buffer;
+    buffer = nullptr;
+
     return EXIT_SUCCESS;
-}
-
-void CleanMemory(int*& pointer)
-{
-    delete[] pointer;
-    pointer = nullptr;
-}
-
-void ExitWithError(const char* prompt)
-{
-    std::cerr << prompt << '\n';
-    std::exit(EXIT_FAILURE);
 }
