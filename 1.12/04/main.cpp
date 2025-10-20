@@ -41,5 +41,8 @@ int main()
         std::cout << buffer[i][j] << (j == 0 ? "\n" : ", ");
     }
 
+    delete[] buffer;
+    buffer = nullptr;
+
     return EXIT_SUCCESS;
 }
