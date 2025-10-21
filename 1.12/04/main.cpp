@@ -22,7 +22,7 @@ int main()
         buffer[i] = new int[cols]();
     }
 
-    for (int k = 0; k < cols * rows; k++)
+    for (int k {}; k < cols * rows; k++)
     {
         int i { k / rows };
         int j { k % rows };
@@ -32,7 +32,7 @@ int main()
 
     source.close();
 
-    for (int k = 0; k < cols * rows; k++)
+    for (int k {}; k < cols * rows; k++)
     {
         int i { k / rows };
         int j { rows - 1 - (k % rows) };
