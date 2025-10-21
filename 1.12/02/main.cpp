@@ -27,7 +27,7 @@ int main()
 
     for (int i { capacity - 1 }; i >= 0; i--)
     {
-        std::cout << buffer[i] << ((i  > 0) ? ", " : "\n");
+        std::cout << buffer[i] << (i > 0 ? ", " : "\n");
     }
 
     delete[] buffer;
