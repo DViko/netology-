@@ -6,7 +6,7 @@ BUILD_DIR := build
 CXX := g++
 CXXFLAGS := -Wall -Wextra -pedantic -std=c++17 -O2 -g -I$(LIB_DIR)
 LD := $(CXX)
-#LDFLAGS
+LDFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt
 
 TARGET := $(BUILD_DIR)/life_app
 
