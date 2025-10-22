@@ -20,7 +20,7 @@ void    DeleteGrid(char**& grid, int rows);
 
 int main()
 {
-    constexpr int ROWS { 150 }, COLS { 100 }, CELL_SIZE { 5 };
+    constexpr int ROWS { 150 }, COLS { 100 }, CELL_SIZE { 7 };
     constexpr float DENSITY { 0.4 };
 
     char ** grid { CreateGrid(ROWS, COLS) };
@@ -143,7 +143,7 @@ void DrawGrid(char** grid, int rows, int cols, int cell_size)
         {
             if (grid[i][j])
             {
-                DrawRectangle(i * cell_size, j * cell_size, cell_size - 1, cell_size - 1, WHITE);
+                DrawRectangle(i * cell_size, j * cell_size, cell_size - 1, cell_size - 1, GREEN);
             }
             else
             {
