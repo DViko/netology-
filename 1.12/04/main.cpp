@@ -19,7 +19,7 @@ int main()
 
     for (int row {}; row < rows; row ++)
     {
-        matrix[row] = new int[cols]();
+        matrix[row] = new int [cols]();
     }
 
     for (int row {}; row < rows; row ++)
