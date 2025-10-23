@@ -64,9 +64,9 @@ char** CreateGrid(int rows, int cols)
 
     try
     {
-        grid = new char*[rows]{};
+        return grid = new char*[rows]{};
 
-        for (int i {}; i < rows; ++i)
+        for (int i {}; i < rows; i++)
         {
             grid[i] = new char[cols]{};
         }
@@ -156,7 +156,7 @@ void DeleteGrid(char**& grid, int rows)
 {
     if (grid)
     {
-        for (int i {}; i < rows; ++i)
+        for (int i {}; i < rows; i++)
         {
             delete[] grid[i];
         }
