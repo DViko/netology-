@@ -64,11 +64,11 @@ char** CreateGrid(int rows, int cols)
 
     try
     {
-        return grid = new char*[rows]{};
+        return grid = new char* [rows]{};
 
         for (int i {}; i < rows; i++)
         {
-            grid[i] = new char[cols]{};
+            grid[i] = new char [cols]{};
         }
     }
     catch (const std::bad_alloc& error)
