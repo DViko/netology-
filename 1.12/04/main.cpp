@@ -3,8 +3,8 @@
 
 int main()
 {
-    int cols {0}, rows {0};
-    int** buffer { nullptr };
+    int cols { 0 }, rows { 0 };
+    int** matrix { nullptr };
 
     std::ifstream source ("in.txt");
 
@@ -14,34 +14,41 @@ int main()
         return EXIT_FAILURE;
     }
 
-    source >> cols >> rows;
-    buffer = new int*[rows]();
+    source >> rows >> cols;
+    matrix = new int* [rows]();
 
-    for (int i {}; i < rows; i++)
+    for (int row {}; row < rows; row ++)
     {
-        buffer[i] = new int[cols]();
+        matrix[row] = new int[cols]();
     }
 
-    for (int k {}; k < cols * rows; k++)
+    for (int row {}; row < rows; row ++)
     {
-        int i { k / rows };
-        int j { k % rows };
-
-        source >> buffer[i][j];
+        for (int col {}; col < cols; col ++)
+        {
+            source >> matrix[row][col];
+        }
     }
 
     source.close();
 
-    for (int k {}; k < cols * rows; k++)
+    for (int row {}; row < rows; row ++)
     {
-        int i { k / rows };
-        int j { rows - 1 - (k % rows) };
-
-        std::cout << buffer[i][j] << (j == 0 ? "\n" : ", ");
+        for (int col { cols - 1 }; col >= 0; col --)
+        {
+            std::cout << matrix[row][col] << (col == 0 ? "" : ", ");;
+        }
+        std::cout << '\n';
     }
 
-    delete[] buffer;
-    buffer = nullptr;
+    for (int row {}; row < rows; row ++)
+    {
+        delete [] matrix[row];
+    }
+
+    delete[] matrix;
+    matrix = nullptr;
 
     return EXIT_SUCCESS;
 }
+
