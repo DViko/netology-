@@ -118,6 +118,7 @@ int LookingForNeighbors(GameState& game, int r_current, int c_current)
         total += game.matrix[(r_current + DIRECTIONS[i][0] + game.rows) % game.rows]
                             [(c_current + DIRECTIONS[i][1] + game.cols) % game.cols];
     }
+
     return total;
 }
 
@@ -201,7 +202,7 @@ void DisplayGame(GameState& game)
 
 void DeleteGameState(GameState& game)
 {
-    for (int row {}; row < game.rows; row++)
+    for (int row {}; row < game.rows; row ++)
     {
         delete[] game.matrix[row];
         delete[] game.buffer[row];
