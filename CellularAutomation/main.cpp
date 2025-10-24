@@ -33,6 +33,8 @@ int main()
 
     if (!CreateInitialStateFromFile(game, "game_state.txt"))
     {
+        DeleteGameState(game);
+        
         std::cerr << "Failed to load game state\n";
         return EXIT_FAILURE;
     }
@@ -198,20 +200,27 @@ void DisplayGame(GameState& game)
 
 void DeleteGameState(GameState& game)
 {
-    for (int row {}; row < game.rows; row ++)
+    if (game.matrix)
     {
-        delete[] game.matrix[row];
-        delete[] game.buffer[row];
+        for (int row {}; row < game.rows; row ++)
+        {
+            delete[] game.matrix[row];
+        }
+
+        delete[] game.matrix;
+        game.matrix = nullptr;
     }
 
-    delete[] game.matrix;
-    delete[] game.buffer;
+    if (game.buffer)
+    {
+        for (int r = 0; r < game.rows; r++)
+        {
+            delete[] game.buffer[r];
+        }
 
-    game.rows = 0, game.cols = 0,
-    game.alive_total = -1, game.stagnation = 0;
-
-    game.matrix = nullptr;
-    game.buffer = nullptr;
+        delete[] game.buffer;
+        game.buffer = nullptr;
+    }
 }
 
 //ToDo: Сreate a function that will write statistics and history to file
