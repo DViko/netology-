@@ -15,8 +15,8 @@ struct GameState
 
 constexpr int DIRECTIONS[8][2]
 {
-    {-1,  0}, { 1,  0}, { 0, -1}, { 0,  1},
-    {-1, -1}, {-1,  1}, { 1, -1}, { 1,  1}
+    { -1,  0 }, {  1,  0 }, { 0, -1 }, { 0,  1 },
+    { -1, -1 }, { -1,  1 }, { 1, -1 }, { 1,  1 }
 };
 
 bool    CreateInitialStateFromFile(GameState& game, const char* path_to_file);
@@ -62,10 +62,6 @@ bool CreateGameState(GameState& game)
         for (int row {}; row < game.rows; row ++)
         {
             game.matrix[row] = new char [game.cols]();
-        }
-
-        for (int row {}; row < game.rows; row ++)
-        {
             game.buffer[row] = new char [game.cols]();
         }
     }
