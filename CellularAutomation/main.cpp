@@ -213,9 +213,9 @@ void DeleteGameState(GameState& game)
 
     if (game.buffer)
     {
-        for (int r = 0; r < game.rows; r++)
+        for (int row{}; row < game.rows; row ++)
         {
-            delete[] game.buffer[r];
+            delete[] game.buffer[row];
         }
 
         delete[] game.buffer;
