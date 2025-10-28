@@ -32,10 +32,14 @@ int main()
     GameState game { 0, 0, 0, -1, 0 };
 
     if (!CreateInitialStateFromFile(game, "game_state.txt"))
-    {
-        DeleteGameState(game);
-        
+    { 
         std::cerr << "Failed to load game state\n";
+
+        if (game.matrix || game.buffer)
+        {
+            DeleteGameState(game);
+        }
+
         return EXIT_FAILURE;
     }
 
@@ -76,7 +80,7 @@ bool CreateGameState(GameState& game)
     return true;
 }
 
-bool  CreateInitialStateFromFile(GameState& game, const char* file_name)
+bool CreateInitialStateFromFile(GameState& game, const char* file_name)
 {
     std::ifstream file(file_name);
 
@@ -87,6 +91,12 @@ bool  CreateInitialStateFromFile(GameState& game, const char* file_name)
     }
 
     file >> game.rows >> game.cols;
+
+    if (game.rows <= 0 || game.cols <= 0)
+    {
+        std::cerr << "Incorrect field size: Y: " << game.rows << " X: " << game.cols << "\n";
+        return false;
+    }
 
     if (!CreateGameState(game))
     {
@@ -107,17 +117,23 @@ bool  CreateInitialStateFromFile(GameState& game, const char* file_name)
     return true;
 }
 
-int LookingForNeighbors(GameState& game, int r_current, int c_current)
+int LookingForNeighbors(GameState& game, int curr_row, int curr_col)
 {
-    int total {};
+    int alive_neighbors {};
 
     for (int i {}; i < 8; i ++)
     {
-        total += game.matrix[(r_current + DIRECTIONS[i][0] + game.rows) % game.rows]
-                            [(c_current + DIRECTIONS[i][1] + game.cols) % game.cols];
+        int neighbor_row { curr_row + DIRECTIONS[i][0] };
+        int neighbor_col { curr_col + DIRECTIONS[i][1] };
+
+        if (neighbor_row >= 0 && neighbor_row < game.rows &&
+            neighbor_col >= 0 && neighbor_col < game.cols)
+        {
+            alive_neighbors += game.matrix[neighbor_row][neighbor_col];
+        }
     }
 
-    return total;
+    return alive_neighbors;
 }
 
 void UpdateGameState(GameState& game)
@@ -174,7 +190,7 @@ void DisplayGame(GameState& game)
     {
         for (int col {}; col < game.cols; col ++)
         {
-            std::cout << (game.matrix[row][col] ? '*' : '-');
+            std::cout << (game.matrix[row][col] ? '*' : '-') << ' ';
         }
 
         std::cout << '\n';
@@ -184,16 +200,16 @@ void DisplayGame(GameState& game)
 
     if (game.stagnation >= 5)
     {
-        DeleteGameState(game);
-
         std::cout << "The world has stagnated. Game over.\n";
+        
+        DeleteGameState(game);
         std::exit(EXIT_SUCCESS);
     }
     if (game.alive_total == 0)
     {
-        DeleteGameState(game);
-
         std::cout << "All cells are dead. Game over.\n";
+
+        DeleteGameState(game);
         std::exit(EXIT_SUCCESS);
     }
 }
