@@ -73,7 +73,7 @@ bool CreateGameState(GameState& game)
     }
     catch (const std::bad_alloc& error)
     {
-        std::cout << "Memory allocation failed!: " << error.what();
+        std::cerr << "Memory allocation failed!: " << error.what();
         return false;
     }
 
