@@ -1,54 +1,53 @@
 #include <iostream>
 #include <fstream>
-#include <chrono>
 #include <thread>
-
-//g++ main.cpp -o exec
+#include <chrono>
 
 struct GameState
 {
-    int rows { 0 }, cols { 0 }, generation { 0 },
-             alive_total { 0 }, stagnation { 0 };
-    char** matrix { nullptr },
-        ** buffer { nullptr };
+    int rows {}, cols {}, generation {};
+    int alive_total {}, stagnation {};
+    char** matrix {};
+    char** buffer {};
 };
 
-constexpr int DIRECTIONS[8][2]
+constexpr int DIRECTIONS[8][2] =
 {
     { -1,  0 }, {  1,  0 }, { 0, -1 }, { 0,  1 },
     { -1, -1 }, { -1,  1 }, { 1, -1 }, { 1,  1 }
 };
 
-bool    CreateInitialStateFromFile(GameState& game, const char* path_to_file);
-bool    CreateGameState(GameState& game);
-int     LookingForNeighbors(GameState& game, int r_current, int c_current);
-void    UpdateGameState(GameState& game);
-void    UpgradeGameState(GameState& game);
-void    DisplayGame(GameState& game);
-void    DeleteGameState(GameState& game);
+bool  CreateInitialStateFromFile(GameState& game, const char* path_to_file);
+bool  CreateGameState(GameState& game);
+int   LookingForNeighbors(GameState& game, int r_current, int c_current);
+bool  IsSameMatrix(GameState& game);
+void  CountAliveCells(GameState& game);
+void  UpdateGameState(GameState& game);
+void  DisplayGame(GameState& game);
+void  DeleteGameState(GameState& game);
 
 int main()
 {
-    GameState game { 0, 0, 0, -1, 0 };
+    GameState game { 0, 0, 0, -1, 0, nullptr, nullptr };
 
     if (!CreateInitialStateFromFile(game, "game_state.txt"))
-    { 
+    {
         std::cerr << "Failed to load game state\n";
 
-        if (game.matrix || game.buffer)
-        {
-            DeleteGameState(game);
-        }
-
+        DeleteGameState(game);
         return EXIT_FAILURE;
     }
+
+    CountAliveCells(game);
+    DisplayGame(game);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
     while (true)
     {
         game.generation ++;
 
         UpdateGameState(game);
-        UpgradeGameState(game);
         DisplayGame(game);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -73,20 +72,19 @@ bool CreateGameState(GameState& game)
     }
     catch (const std::bad_alloc& error)
     {
-        std::cerr << "Memory allocation failed!: " << error.what();
+        std::cerr << "Memory allocation failed: " << error.what() << '\n';
         return false;
     }
-
     return true;
 }
 
 bool CreateInitialStateFromFile(GameState& game, const char* file_name)
 {
     std::ifstream file(file_name);
-
+    
     if (!file.is_open())
     {
-        std::cerr << "Failed to open file: " << file_name << "\n";
+        std::cerr << "Failed to open file: " << file_name << '\n';
         return false;
     }
 
@@ -94,7 +92,7 @@ bool CreateInitialStateFromFile(GameState& game, const char* file_name)
 
     if (game.rows <= 0 || game.cols <= 0)
     {
-        std::cerr << "Incorrect field size: Y: " << game.rows << " X: " << game.cols << "\n";
+        std::cerr << "Incorrect field size: Y=" << game.rows << " X=" << game.cols << '\n';
         return false;
     }
 
@@ -107,7 +105,8 @@ bool CreateInitialStateFromFile(GameState& game, const char* file_name)
 
     while (file >> file_row >> file_col)
     {
-        if (file_row >= 0 && file_row < game.rows && file_col >= 0 && file_col < game.cols)
+        if (file_row >= 0 && file_row < game.rows &&
+            file_col >= 0 && file_col < game.cols)
         {
             game.matrix[file_row][file_col] = 1;
         }
@@ -119,32 +118,59 @@ bool CreateInitialStateFromFile(GameState& game, const char* file_name)
 
 int LookingForNeighbors(GameState& game, int curr_row, int curr_col)
 {
-    int alive_neighbors {};
+    int total {};
 
     for (int i {}; i < 8; i ++)
     {
-        int neighbor_row { curr_row + DIRECTIONS[i][0] };
-        int neighbor_col { curr_col + DIRECTIONS[i][1] };
+        int neighbor_row{ curr_row + DIRECTIONS[i][0] };
+        int neighbor_col{ curr_col + DIRECTIONS[i][1] };
 
         if (neighbor_row >= 0 && neighbor_row < game.rows &&
             neighbor_col >= 0 && neighbor_col < game.cols)
         {
-            alive_neighbors += game.matrix[neighbor_row][neighbor_col];
+            total += game.matrix[neighbor_row][neighbor_col];
         }
     }
 
-    return alive_neighbors;
+    return total;
 }
 
-void UpdateGameState(GameState& game)
-{   
-    int alive_total {};
+bool IsSameMatrix(GameState& game)
+{
+    for (int row {}; row < game.rows; row ++)
+    {
+        for (int col {}; col < game.cols; col ++)
+        {
+            if (game.matrix[row][col] != game.buffer[row][col])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void CountAliveCells(GameState& game)
+{
+    int total {};
 
     for (int row {}; row < game.rows; row ++)
     {
         for (int col {}; col < game.cols; col ++)
         {
-            int total { LookingForNeighbors(game, row, col) };
+            total += game.matrix[row][col];
+        }
+    }
+    game.alive_total = total;
+}
+
+void UpdateGameState(GameState& game)
+{
+    for (int row {}; row < game.rows; row ++)
+    {
+        for (int col {}; col < game.cols; col ++)
+        {
+            int total{ LookingForNeighbors(game, row, col) };
 
             if (game.matrix[row][col])
             {
@@ -154,27 +180,18 @@ void UpdateGameState(GameState& game)
             {
                 game.buffer[row][col] = (total == 3);
             }
-
-            if (game.buffer[row][col])
-            {
-                alive_total ++;
-            }
         }
     }
 
-    if(game.alive_total == alive_total)
+    if (IsSameMatrix(game))
     {
-        game.stagnation ++;
-    }
+        game.stagnation++;
+    }  
     else
     {
         game.stagnation = 0;
     }
-    game.alive_total = alive_total;
-}
 
-void UpgradeGameState(GameState& game)
-{
     for (int row {}; row < game.rows; row ++)
     {
         for (int col {}; col < game.cols; col ++)
@@ -182,6 +199,8 @@ void UpgradeGameState(GameState& game)
             game.matrix[row][col] = game.buffer[row][col];
         }
     }
+
+    CountAliveCells(game);
 }
 
 void DisplayGame(GameState& game)
@@ -192,19 +211,20 @@ void DisplayGame(GameState& game)
         {
             std::cout << (game.matrix[row][col] ? '*' : '-') << ' ';
         }
-
         std::cout << '\n';
     }
 
-    std::cout << "Generation: " << game.generation << " Alive Cells: " << game.alive_total << '\n';
+    std::cout << "Generation: " << game.generation
+              << " | Alive Cells: " << game.alive_total << '\n';
 
-    if (game.stagnation >= 5)
+    if (game.stagnation >= 1)
     {
         std::cout << "The world has stagnated. Game over.\n";
-        
+
         DeleteGameState(game);
         std::exit(EXIT_SUCCESS);
     }
+
     if (game.alive_total == 0)
     {
         std::cout << "All cells are dead. Game over.\n";
@@ -212,6 +232,8 @@ void DisplayGame(GameState& game)
         DeleteGameState(game);
         std::exit(EXIT_SUCCESS);
     }
+
+    std::cout << std::string(30, '-') << "\n\n";
 }
 
 void DeleteGameState(GameState& game)
@@ -222,7 +244,6 @@ void DeleteGameState(GameState& game)
         {
             delete[] game.matrix[row];
         }
-
         delete[] game.matrix;
         game.matrix = nullptr;
     }
@@ -233,10 +254,7 @@ void DeleteGameState(GameState& game)
         {
             delete[] game.buffer[row];
         }
-
         delete[] game.buffer;
         game.buffer = nullptr;
     }
 }
-
-//ToDo: Сreate a function that will write statistics and history to file
