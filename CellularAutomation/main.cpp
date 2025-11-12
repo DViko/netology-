@@ -38,6 +38,7 @@ int main()
         return EXIT_FAILURE;
     }
 
+    game.generation ++;
     CountAliveCells(game);
     DisplayGame(game);
 
