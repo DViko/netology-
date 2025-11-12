@@ -11,7 +11,7 @@ struct GameState
     char** buffer {};
 };
 
-constexpr int DIRECTIONS[8][2] =
+constexpr int DIRECTIONS[8][2]
 {
     { -1,  0 }, {  1,  0 }, { 0, -1 }, { 0,  1 },
     { -1, -1 }, { -1,  1 }, { 1, -1 }, { 1,  1 }
@@ -185,7 +185,7 @@ void UpdateGameState(GameState& game)
 
     if (IsSameMatrix(game))
     {
-        game.stagnation++;
+        game.stagnation ++;
     }  
     else
     {
