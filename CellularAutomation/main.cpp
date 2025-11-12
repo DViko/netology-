@@ -5,10 +5,11 @@
 
 struct GameState
 {
-    int rows {}, cols {}, generation {};
-    int alive_total {}, stagnation {};
-    char** matrix {};
-    char** buffer {};
+    int rows {}, cols {}, generation {},
+        stagnation {}, alive_total {};
+
+    char** matrix {},
+        ** buffer {};
 };
 
 constexpr int DIRECTIONS[8][2]
@@ -17,18 +18,18 @@ constexpr int DIRECTIONS[8][2]
     { -1, -1 }, { -1,  1 }, { 1, -1 }, { 1,  1 }
 };
 
-bool  CreateInitialStateFromFile(GameState& game, const char* path_to_file);
 bool  CreateGameState(GameState& game);
-int   LookingForNeighbors(GameState& game, int r_current, int c_current);
-bool  IsSameMatrix(GameState& game);
-void  CountAliveCells(GameState& game);
+bool  CreateInitialStateFromFile(GameState& game, const char* path_to_file);
+bool  IsSameMatrix(const GameState& game);
+int   LookingForNeighbors(const GameState& game, int r_current, int c_current);
 void  UpdateGameState(GameState& game);
+void  CountAliveCells(GameState& game);
 void  DisplayGame(GameState& game);
 void  DeleteGameState(GameState& game);
 
 int main()
 {
-    GameState game { 0, 0, 0, -1, 0, nullptr, nullptr };
+    GameState game { 0, 0, 0, 0, 0, nullptr, nullptr };
 
     if (!CreateInitialStateFromFile(game, "game_state.txt"))
     {
@@ -38,19 +39,29 @@ int main()
         return EXIT_FAILURE;
     }
 
-    game.generation ++;
     CountAliveCells(game);
     DisplayGame(game);
-
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
     while (true)
     {
         game.generation ++;
-
         UpdateGameState(game);
-        DisplayGame(game);
 
+        if (game.alive_total == 0)
+        {
+            std::cout << "All cells are dead. Game over.\n";
+            break;
+        }
+
+        if (game.stagnation >= 2)
+        {
+            std::cout << "Stagnation reached. Game over.\n";
+            break;
+        }
+
+        CountAliveCells(game);
+        DisplayGame(game);
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
@@ -93,7 +104,7 @@ bool CreateInitialStateFromFile(GameState& game, const char* file_name)
 
     if (game.rows <= 0 || game.cols <= 0)
     {
-        std::cerr << "Incorrect field size: Y=" << game.rows << " X=" << game.cols << '\n';
+        std::cerr << "Incorrect field size: Row =" << game.rows << " Col =" << game.cols << '\n';
         return false;
     }
 
@@ -111,13 +122,18 @@ bool CreateInitialStateFromFile(GameState& game, const char* file_name)
         {
             game.matrix[file_row][file_col] = 1;
         }
+        else
+        {
+            std::cerr << "\nWarning: cell (" << file_row << ", " << file_col << ") is out of bounds.\n\n";
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        }
     }
 
     file.close();
     return true;
 }
 
-int LookingForNeighbors(GameState& game, int curr_row, int curr_col)
+int LookingForNeighbors(const GameState& game, int curr_row, int curr_col)
 {
     int total {};
 
@@ -136,7 +152,7 @@ int LookingForNeighbors(GameState& game, int curr_row, int curr_col)
     return total;
 }
 
-bool IsSameMatrix(GameState& game)
+bool IsSameMatrix(const GameState& game)
 {
     for (int row {}; row < game.rows; row ++)
     {
@@ -149,6 +165,43 @@ bool IsSameMatrix(GameState& game)
         }
     }
     return true;
+}
+
+void UpdateGameState(GameState& game)
+{
+    for (int row {}; row < game.rows; row ++)
+    {
+        for (int col {}; col < game.cols; col ++)
+        {
+            int total { LookingForNeighbors(game, row, col) };
+
+            if (game.matrix[row][col])
+            {
+                game.buffer[row][col] = (total == 2 || total == 3);
+            }
+            else
+            {
+                game.buffer[row][col] = (total == 3);
+            }
+        }
+    }
+
+    if (IsSameMatrix(game))
+    {
+        game.stagnation ++;
+    }     
+    else
+    {
+        game.stagnation = 0;
+    }
+
+    for (int row {}; row < game.rows; row ++)
+    {
+        for (int col {}; col < game.cols; col ++)
+        {
+            game.matrix[row][col] = game.buffer[row][col];
+        }
+    }
 }
 
 void CountAliveCells(GameState& game)
@@ -165,45 +218,6 @@ void CountAliveCells(GameState& game)
     game.alive_total = total;
 }
 
-void UpdateGameState(GameState& game)
-{
-    for (int row {}; row < game.rows; row ++)
-    {
-        for (int col {}; col < game.cols; col ++)
-        {
-            int total{ LookingForNeighbors(game, row, col) };
-
-            if (game.matrix[row][col])
-            {
-                game.buffer[row][col] = (total == 2 || total == 3);
-            }
-            else
-            {
-                game.buffer[row][col] = (total == 3);
-            }
-        }
-    }
-
-    if (IsSameMatrix(game))
-    {
-        game.stagnation ++;
-    }  
-    else
-    {
-        game.stagnation = 0;
-    }
-
-    for (int row {}; row < game.rows; row ++)
-    {
-        for (int col {}; col < game.cols; col ++)
-        {
-            game.matrix[row][col] = game.buffer[row][col];
-        }
-    }
-
-    CountAliveCells(game);
-}
-
 void DisplayGame(GameState& game)
 {
     for (int row {}; row < game.rows; row ++)
@@ -218,44 +232,30 @@ void DisplayGame(GameState& game)
     std::cout << "Generation: " << game.generation
               << " | Alive Cells: " << game.alive_total << '\n';
 
-    if (game.stagnation >= 1)
-    {
-        std::cout << "The world has stagnated. Game over.\n";
-
-        DeleteGameState(game);
-        std::exit(EXIT_SUCCESS);
-    }
-
-    if (game.alive_total == 0)
-    {
-        std::cout << "All cells are dead. Game over.\n";
-
-        DeleteGameState(game);
-        std::exit(EXIT_SUCCESS);
-    }
-
-    std::cout << std::string(30, '-') << "\n\n";
+    std::cout << std::string(30, '-') << "\n";
 }
 
 void DeleteGameState(GameState& game)
 {
-    if (game.matrix)
+    auto DeleteMatrix = [](char**& matrix, int rows)
     {
-        for (int row {}; row < game.rows; row ++)
+        if (!matrix)
         {
-            delete[] game.matrix[row];
+            return;
         }
-        delete[] game.matrix;
-        game.matrix = nullptr;
-    }
+        for (int row {}; row < rows; row ++)
+        {
+            delete[] matrix[row];
+            matrix[row] = nullptr;
+        }
+        delete[] matrix;
+        matrix = nullptr;
+    };
 
-    if (game.buffer)
-    {
-        for (int row {}; row < game.rows; row ++)
-        {
-            delete[] game.buffer[row];
-        }
-        delete[] game.buffer;
-        game.buffer = nullptr;
-    }
+    DeleteMatrix(game.matrix, game.rows);
+    DeleteMatrix(game.buffer, game.rows);
+
+    game.rows = game.cols = 0;
+    game.generation = game.stagnation = 0;
+    game.alive_total = 0;
 }
