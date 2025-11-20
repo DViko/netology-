@@ -139,8 +139,8 @@ int LookingForNeighbors(const GameState& game, int curr_row, int curr_col)
 
     for (int i {}; i < 8; i ++)
     {
-        int neighbor_row{ curr_row + DIRECTIONS[i][0] };
-        int neighbor_col{ curr_col + DIRECTIONS[i][1] };
+        int neighbor_row { curr_row + DIRECTIONS[i][0] };
+        int neighbor_col { curr_col + DIRECTIONS[i][1] };
 
         if (neighbor_row >= 0 && neighbor_row < game.rows &&
             neighbor_col >= 0 && neighbor_col < game.cols)
